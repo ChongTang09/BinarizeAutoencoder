@@ -10,6 +10,11 @@ from torchvision import datasets, transforms
 import numpy as np
 import matplotlib.pyplot as plt
 
+def denormalize(image):
+    image = image * 0.5 + 0.5  # reverse normalization
+    image = image.clamp(0, 1)  # clamp to [0, 1]
+    return image
+
 class AEBinarizerTrainer:
     def __init__(self, model, lr=1e-3, device=None, model_path=None):
         self.model = model
@@ -64,6 +69,7 @@ class AEBinarizerTrainer:
         return train_losses, test_losses
 
     def plot_losses(self, train_losses, test_losses):
+        plt.figure()
         plt.plot(train_losses, label='train loss')
         plt.plot(test_losses, label='test loss')
         plt.legend()
@@ -73,8 +79,9 @@ class AEBinarizerTrainer:
         images, _ = next(iter(self.testloader))
         images = images.to(self.device)
         outputs = self.model(images)
-        images = images.cpu().numpy()
-        outputs = outputs.cpu().detach().numpy()
+        images = denormalize(images.cpu().numpy())
+        outputs = denormalize(outputs.cpu().detach().numpy())
+        plt.figure()
         for i in range(10):
             plt.subplot(2, 10, i + 1)
             plt.imshow(np.transpose(images[i], (1, 2, 0)))
