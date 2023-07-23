@@ -35,10 +35,12 @@ class Autoencoder(nn.Module):
             nn.Sigmoid(),
         )
 
-    def forward(self, x, encode=False, decode=False):
+    def forward(self, x, encode=False, decode=False, reshape_to=None):
         if encode:
             x = self.encoder(x)
             x = self.STE.apply(x)
+            if reshape_to is not None:
+                x = x.view(x.size(0), reshape_to[0], reshape_to[1], reshape_to[2])
         elif decode:
             x = self.decoder(x)
         else:
