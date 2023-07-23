@@ -25,6 +25,7 @@ class AEBinarizerTrainer:
         self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model.to(self.device)
         
+        self.model_path = model_path
         if model_path and os.path.exists(model_path):
             self.load_model(model_path)
 
