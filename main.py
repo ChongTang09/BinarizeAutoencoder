@@ -73,7 +73,7 @@ class AEBinarizerTrainer:
             # If this epoch's test loss is lower than the best loss seen so far, save the model
             if test_loss < best_loss:
                 best_loss = test_loss
-                self.save_model(self.model)
+                self.save_model(self.model_path)
 
         return train_losses, test_losses
 
