@@ -115,9 +115,9 @@ def main():
     trainer = AEBinarizerTrainer(Autoencoder(BinarizeSTE, apply_sigmoid=True), lr=1e-3, device=device, model_path='model.pth')
     trainer.load_cifar10(128)
     train_losses, test_losses = trainer.train(epochs=10)
-    trainer.plot_losses(train_losses, test_losses)
-    trainer.plot_images()
-    trainer.save_model('model.pth')  # Save the trained model
+    # trainer.plot_losses(train_losses, test_losses)
+    # trainer.plot_images()
+    # trainer.save_model('model.pth')  # Save the trained model
 
 
 if __name__ == '__main__':

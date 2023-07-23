@@ -16,16 +16,16 @@ class Autoencoder(nn.Module):
             nn.Conv2d(32, 64, kernel_size=4, stride=2, padding=1),  # B,  64, 8, 8
             nn.ReLU(),
             nn.BatchNorm2d(64),
-            nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1),  # B, 128, 4, 4
+            nn.Conv2d(64, 64, kernel_size=4, stride=2, padding=1),  # B, 128, 4, 4
             nn.ReLU(),
-            nn.BatchNorm2d(128),
+            nn.BatchNorm2d(64),
         )
         
         if apply_sigmoid:
             self.encoder.add_module('Sigmoid', nn.Sigmoid())
 
         self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1),  # B,  64, 8, 8
+            nn.ConvTranspose2d(64, 64, kernel_size=4, stride=2, padding=1),  # B,  64, 8, 8
             nn.ReLU(),
             nn.BatchNorm2d(64),
             nn.ConvTranspose2d(64, 32, kernel_size=4, stride=2, padding=1),  # B,  32, 16, 16
