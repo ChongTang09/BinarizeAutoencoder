@@ -88,6 +88,7 @@ class AEBinarizerTrainer:
     def plot_images(self):
         images, _ = next(iter(self.testloader))
         images = images.to(self.device)
+        self.model.eval()
         outputs = self.model(images)
         images = denormalize(images.cpu().numpy())
         outputs = denormalize(outputs.cpu().detach().numpy())
