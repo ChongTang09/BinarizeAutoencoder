@@ -38,6 +38,7 @@ class Autoencoder(nn.Module):
     def forward(self, x, encode=False, decode=False):
         if encode:
             x = self.encoder(x)
+            x = self.STE.apply(x)
         elif decode:
             x = self.decoder(x)
         else:

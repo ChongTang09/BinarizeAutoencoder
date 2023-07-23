@@ -1,8 +1,9 @@
 # ignore pytcache folder
 __pycache__/
 
-# ignore data folder
+# ignore data and image folder
 data/
+img/
 
 # ignore pytorch models
 *.pth

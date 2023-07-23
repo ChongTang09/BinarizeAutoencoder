@@ -84,6 +84,7 @@ class AEBinarizerTrainer:
         plt.plot(test_losses, label='test loss')
         plt.legend()
         plt.show()
+        plt.savefig('img/lose.png')
 
     def plot_images(self):
         images, _ = next(iter(self.testloader))
@@ -99,6 +100,7 @@ class AEBinarizerTrainer:
             plt.subplot(2, 10, i + 11)
             plt.imshow(np.transpose(outputs[i], (1, 2, 0)))
         plt.show()
+        plt.savefig('img/images.png')
 
     def save_model(self, path):
         torch.save(self.model.state_dict(), path)
