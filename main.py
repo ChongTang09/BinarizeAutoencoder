@@ -1,6 +1,8 @@
 from autoencoder import Autoencoder
 from ste import BinarizeSTE, ClampSTE, RoundSTE
 
+import os
+
 import torch
 from torch import nn
 from torch import optim
@@ -23,7 +25,7 @@ class AEBinarizerTrainer:
         self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model.to(self.device)
         
-        if model_path:
+        if model_path and os.path.exists(model_path):
             self.load_model(model_path)
 
     def load_cifar10(self, batch_size):
