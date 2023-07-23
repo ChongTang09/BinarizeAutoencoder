@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def denormalize(image):
     image = image * 0.5 + 0.5  # reverse normalization
-    image = image.clamp(0, 1)  # clamp to [0, 1]
+    image = image.clip(0, 1)  # clamp to [0, 1]
     return image
 
 class AEBinarizerTrainer:
@@ -42,6 +42,7 @@ class AEBinarizerTrainer:
         self.model.train()
         train_losses = []
         test_losses = []
+        best_loss = float('inf')  # Initialize best loss to infinity
         for epoch in range(epochs):
             train_loss = 0
             for images, _ in self.trainloader:
@@ -68,6 +69,12 @@ class AEBinarizerTrainer:
             self.model.train()
 
             print(f'Epoch {epoch + 1}/{epochs} - train loss: {train_loss:.4f} - test loss: {test_loss:.4f}')
+
+            # If this epoch's test loss is lower than the best loss seen so far, save the model
+            if test_loss < best_loss:
+                best_loss = test_loss
+                self.save_model(self.model)
+
         return train_losses, test_losses
 
     def plot_losses(self, train_losses, test_losses):
